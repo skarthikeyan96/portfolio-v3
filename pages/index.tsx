@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { getAllDocs } from '../lib/helper'
 
 const Home: NextPage = () => {
   return (
