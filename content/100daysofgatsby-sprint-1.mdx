@@ -1,0 +1,215 @@
+---
+title: "#100daysofGatsby - Sprint 1"
+description: In this blog series, I will be documenting my 100daysofGatsby journey. I will
+  try to keep it as interesting as possible.
+slug: 100daysofgatsby-sprint-1
+author: Karthikeyan
+date: 2022-01-24T08:00:00.000Z
+---
+## #100daysofGatsby - Sprint 1
+
+In this blog series, I will be documenting my 100daysofGatsby journey. I will try to keep it as interesting as possible.
+
+Without further ado, Let's dive in.
+
+![https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif](https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif)
+
+Below are the things which we need to make for the first sprint
+
+- Build a proof of concept (POC) Gatsby site to test their routing API, builds service, hosting, and Contentful integration
+- Use Gatsby’s Contentful plugin and connect to a test Contentful site
+- Create the following pages:
+    - home
+    - about
+    - and a collection of pages for every city we’re in.
+- Build it on Gatsby Cloud and use their preview URL
+- No styling needed for the first sprint
+
+You can find the detailed briefing in this [link](https://gatsbyjs.com/blog/100days-challenge-1/)
+
+
+Let's get to work
+
+![https://media.giphy.com/media/QxZ0nbcVgMlPlnfZos/giphy.gif](https://media.giphy.com/media/QxZ0nbcVgMlPlnfZos/giphy.gif)
+
+
+> Heads-up: Make sure you have Node.js,npm, and Git CLI installed. 
+
+Check out the official [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+) docs for downloading and installing Node.js and npm in your machine. 
+
+## Installing Gatsby
+
+```bash
+npm init gatsby
+```
+
+You should see something like this
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611415247213/XFB0NUYHp.png)
+
+1. Give the site name as `audio-core` as it is more contextual. Feel free to give any name you like.
+2. choose the folder in which the site will be created.
+3. Since we are asked to connect to `Contentful` CMS, let's go with option 2 in the list.
+4. Let's ignore the styles for now and press enter
+5. Let's do the same for the plugins and press `done` and move to the next step
+6. Now for the configuration of the contentful plugin, press enter and do not add the API keys and space id. We will do it later when creating a new space in the contentful app.
+
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611416416219/uriNC3SR0.png)
+
+
+With the installation in progress, let's create our API key and space id in the contentful to connect with our gatsby site.
+
+![https://media.giphy.com/media/BpGWitbFZflfSUYuZ9/giphy.gif](https://media.giphy.com/media/BpGWitbFZflfSUYuZ9/giphy.gif)
+
+## Setting up Contentful:
+
+- Create your contentful account by visiting this [link](https://www.contentful.com/sign-up/).
+
+- Create the space for your project. 
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611429265559/xIbOPG0f_.png)
+
+- Clicking on `create Space` should take you to the final screen as Contentful allows you to create 2 project spaces with the free plan. You can take a look at their pricing structure by visiting their [official website](https://www.contentful.com/pricing/).
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611429358206/dBNIvXNmQ.png)
+
+Finally, the welcome screen for your space.
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611429420383/Bw9tNxMGA.png)
+
+## Adding Content Model and Types: 
+
+Now click on the **Content model** to create your first **content type**. A content model structures and organizes your content. It’s made up of content types. 
+
+Name the first content type as **index**, which will help us in serving the data related to **homepage**.
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611418177399/N8Wm4ZFkV.png)
+
+Now for the home page, let's create two fields `Title` and `Description`, and hit save.
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611418228466/oo-_WSAis.png)
+
+For the about us page, let's add another content type `About` which will also hold the same as `Index` two fields `Title` and `Description`.
+
+
+The reason why I am creating title and description in the CMS is that it will remain static and I do not need to change it every time via code, updating the CMS will automatically publish the updated contents to the app. We will see how it will happen in part 2 of the series.
+
+
+Let's add the following three fields for the locations page.
+
+1. slug 
+2. state 
+3. country
+
+**Slug** for routing purposes. It will be automatically created when we enter the name of the country. State and country for displaying in the separate locations page.
+
+After creating, it should look something like this.
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611418507765/7s4a18Qa4.png)
+
+Your content-model dashboard should look something like this.
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611418651203/px3TnmzNt.png)
+
+Let's add some dummy content, before connecting this with gatsby.
+
+1. Go to content and select `add entry` and then select the content type as Index and click `Add New index`. 
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611418674144/F95KlBTGG.png)
+
+2. Click `publish` and go back to the dashboard. 
+
+Let's repeat the same process for the about us and locations and add the static data which we will be used to render in the front end part of our app. 
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611418832239/Ftq35h1Cj.png)
+
+![https://media.giphy.com/media/VEzlrMWk3F7uuFuRSq/giphy.gif](https://media.giphy.com/media/VEzlrMWk3F7uuFuRSq/giphy.gif)
+
+The installation process should be over by now. Let's connect our gatsby site with contentful.
+
+## Connecting Gatsby and Contentful:
+
+Click on the settings and go to the API keys and click on `Add API key` 
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611418786996/n5NxKJR3C.png)
+
+Since we have created our API key and the space id. Let us connect it with our site. 
+
+Open `gatsby-config.js` and add the space id and the API key for the access token. 
+
+![https://media.giphy.com/media/Db0wfJKA9S4PjnODqB/giphy.gif](https://media.giphy.com/media/Db0wfJKA9S4PjnODqB/giphy.gif)
+
+🚨  Do not add the API key as plain text. 
+
+Run this below command to install `dotenv` to create env variables. It helps in managing our env variables. 
+
+```bash
+yarn add dotenv
+```
+
+After that create `.env` file in the root of your project folder and create the variable and add the contentful access token value.
+
+Add the env variables to your `gatsby.config.js` file. 
+
+```jsx
+const dotenv = require('dotenv')
+
+dotenv.config()
+
+module.exports = {
+  siteMetadata: {
+    title: "Audio core",
+  },
+  plugins: [
+    {
+      resolve: "gatsby-source-contentful",
+      options: {
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
+      },
+    },
+  ],
+};
+```
+
+Let's fire up our starter application. 
+
+Run this command
+
+```bash
+yarn develop
+```
+
+![https://media.giphy.com/media/Oj5w7lOaR5ieNpuBhn/giphy.gif](https://media.giphy.com/media/Oj5w7lOaR5ieNpuBhn/giphy.gif)
+
+Open this link [localhost:8000](http://localhost:8000) and you should see this in your browser.
+
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611418935453/a0WERC80p.png)
+
+Before wrapping up part 1, let's verify whether we are able to access the data from the contentful. You should be able to access the graphql playground via this 
+
+[http://localhost:8000/___graphql](http://localhost:8000/___graphql)
+
+
+![image.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1611428303766/8oCauutTi.png)
+
+🎉🎉🎉 Awesome, we are able to query the data which we need from the CMS.
+
+That's a wrap on part 1 of this sprint.
+
+![https://media.giphy.com/media/3otPoS81loriI9sO8o/giphy.gif](https://media.giphy.com/media/3otPoS81loriI9sO8o/giphy.gif)
+
+
+Thank you for reading. Feedbacks are always welcome. If I have missed something or if you have any doubts, please let me know in the comments. See you in part 2.
+
+![giphy](https://media.giphy.com/media/lOJKLVYkNDWN8GoPoA/giphy.gif)
+
+
+Resources:
+
+1. [How to Graphql](https://www.howtographql.com/basics/0-introduction/).
+2. [Gatsby Docs](https://www.gatsbyjs.com/docs/)
+
