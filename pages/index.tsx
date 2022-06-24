@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { getAllDocs } from '../lib/helper'
+import Link from 'next/link'
 
 const Home: NextPage = () => {
   return (
@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <p className='font-serif'> Tailwind css + Next </p>
+      <Link href="/posts"> Go to Posts </Link>
     </div>
   )
 }
